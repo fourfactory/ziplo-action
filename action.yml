@@ -1,0 +1,13 @@
+name: 'Ziplo - Github Action'
+description: 'Make an automatic source code consignment easily'
+inputs:
+  organization-token:
+    description: 'Your organization token'
+    required: true
+    default: null
+outputs:
+  consignment-token:
+    description: 'The unique consignment token generated'
+runs:
+  using: 'node16'
+  main: 'index.js'

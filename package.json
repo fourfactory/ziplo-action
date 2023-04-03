@@ -1,0 +1,30 @@
+{
+  "name": "ziplo-github-action",
+  "version": "1.0.0",
+  "description": "Automatic consignment of source code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fourfactory/ziplo-action.git"
+  },
+  "keywords": [
+    "ziplo",
+    "github",
+    "actions",
+    "consignment"
+  ],
+  "author": "Ziplo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fourfactory/ziplo-action/issues"
+  },
+  "homepage": "https://github.com/fourfactory/ziplo-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.1.1"
+  }
+}
