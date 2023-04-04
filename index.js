@@ -26,8 +26,7 @@ async function run() {
 
     exec.exec(`pwd`);
     exec.exec(`ls -l`);
-    exec.exec(`ls -l ..`);
-    exec.exec(`tar -czvf ./${filename} ./*`);
+    exec.exec(`tar -czvf ${filename} ./*`);
 
     const stats = fs.statSync(`./${filename}`);
 
