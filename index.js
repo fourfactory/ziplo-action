@@ -29,7 +29,7 @@ async function run() {
     //const test = await exec.exec(`pwd`);
     //console.log("Current path = " + test);
 
-    await exec.exec(`tar -czvf ${filename} ${test}/*`);
+    await exec.exec(`tar -czvf ${filename} ./*`);
     await exec.exec(`ls -l`);
 
     const stats = fs.statSync(`./${filename}`);
