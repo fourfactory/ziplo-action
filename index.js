@@ -24,7 +24,7 @@ async function run() {
     //const filename = `${github.context.payload.repository.name}-${version}.tar.gz`;
 
     console.info(`Ziplo Action | Filename is ${filename}`);
-    console.info(`Ziplo Action | Execute tar command`);
+    //console.info(`Ziplo Action | Execute tar command`);
 
     //const test = await exec.exec(`pwd`);
     //console.log("Current path = " + test);
@@ -51,6 +51,9 @@ async function run() {
     });
 
     const dataInit = await resultInit.json();
+
+    const debugLine = JSON.stringify(dataInit, undefined, 2)
+    console.log(`The debug line: ${debugLine}`);
 
     console.info(`Ziplo Action | Authorization OK : ${dataInit.token}`);
     console.info(`Ziplo Action | Upload on Cloud-Factory`);
