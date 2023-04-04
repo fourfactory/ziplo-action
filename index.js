@@ -56,12 +56,11 @@ async function run() {
     console.info(`Ziplo Action | Upload on Cloud-Factory`);
 
     const bodyStorage = new FormData();
-    const fileStream = fs.readFileSync(`./${filename}`);
+    const fileStream = fs.createReadStream(`./${filename}`);
 
     bodyStorage.append('file', fileStream, { knownLength: stats.size });
     bodyStorage.append('email', "github-actions@ziplo.fr");
     bodyStorage.append('source', "consignment");
-    //bodyStorage.append('store', true);
     bodyStorage.append('versioningToken', dataInit.body.token);
 
     const resultUpload = await fetch(CloudFactoryApiHost + 'versioning/upload', {
@@ -69,7 +68,7 @@ async function run() {
       body: bodyStorage,
       headers: {
         'authorization': organizationToken,
-        'content-type': "multipart/form-data"
+        'Content-Type': "multipart/form-data"
       }
     });
     const dataUpload = await resultUpload.json();
