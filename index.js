@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const exec = require('@actions/exec');
 const fetch = require('node-fetch');
-const FormData = require('form-data');
+//const FormData = require('form-data');
 const fs = require("fs"); // Load the filesystem module
 
 const ziploApiHost = "https://api.dev.ziplo.fr/v1/";
@@ -47,7 +47,6 @@ async function run() {
       headers: {
         'authorization': organizationToken,
         'Content-Type': 'application/json',
-        "Content-length": stats.size
       }
     });
 
