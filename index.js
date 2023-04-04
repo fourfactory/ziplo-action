@@ -24,10 +24,10 @@ async function run() {
     console.info(`Ziplo Action | Filename is ${filename}`);
     console.info(`Ziplo Action | Execute tar command`);
 
-    const test = exec.exec(`pwd`);
+    const test = await exec.exec(`pwd`);
     console.log("Current path = " + test);
 
-    exec.exec(`tar -czvf ${filename} ./*`);
+    exec.exec(`tar -czvf ${filename} ${test}/*`);
     exec.exec(`ls -l`);
 
     const stats = fs.statSync(`./${filename}`);
