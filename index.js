@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const exec = require('@actions/exec');
 const fetch = require('node-fetch');
-
+const FormData = require('form-data');
 const fs = require("fs"); // Load the filesystem module
 
 const ziploApiHost = "https://api.dev.ziplo.fr/v1/";
@@ -24,9 +24,9 @@ async function run() {
     console.info(`Ziplo Action | Filename is ${filename}`);
     console.info(`Ziplo Action | Execute tar command`);
 
-    exec.exec(`tar -czvf ${filename} ./*`);
+    exec.exec(`tar -czvf ./${filename} ./*`);
 
-    const stats = fs.statSync(filename);
+    const stats = fs.statSync(`./${filename}`);
 
     const body = {
       size: stats.size,
@@ -49,18 +49,22 @@ async function run() {
     console.info(`Ziplo Action | Authorization OK : ${dataInit.token}`);
     console.info(`Ziplo Action | Upload on Cloud-Factory`);
 
-    const bodyStorage = {
-      email: "github-actions@ziplo.fr",
-      source: "consignment",
-      store: true,
-      versioningToken: dataInit.token
-    };
+
+    const bodyStorage = new FormData();
+    const fileStream = fs.createReadStream(`./${filename}`);
+
+    bodyStorage.append('file', fileStream, { knownLength: stats.size });
+    bodyStorage.append('email', "github-actions@ziplo.fr");
+    bodyStorage.append('source', "consignment");
+    bodyStorage.append('store', true);
+    bodyStorage.append('versioningToken', dataInit.token);
+
     const resultUpload = await fetch(CloudFactoryApiHost + 'versioning/upload', {
       method: 'POST',
-      body: JSON.stringify(bodyStorage),
+      body: bodyStorage,
       headers: {
         'authorization': organizationToken,
-        'Content-Type': 'application/json'
+        'Content-Type': 'multipart/form-data'
       }
     });
     const dataUpload = await resultUpload.json();
