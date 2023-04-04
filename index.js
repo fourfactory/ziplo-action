@@ -68,7 +68,8 @@ async function run() {
       method: 'POST',
       body: bodyStorage,
       headers: {
-        'authorization': organizationToken
+        'authorization': organizationToken,
+        'content-type': "multipart/form-data"
       }
     });
     const dataUpload = await resultUpload.json();
