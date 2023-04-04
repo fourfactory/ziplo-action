@@ -20,8 +20,8 @@ async function run() {
       version = [now.getFullYear, now.getMonth, now.getDay].join("-");
     }
 
-    //const filename = filepath === null ? `${github.context.payload.repository.name}-${version}.tar.gz` : filepath;
-    const filename = `${github.context.payload.repository.name}-${version}.tar.gz`;
+    const filename = filepath === null ? `${github.context.payload.repository.name}-${version}.tar.gz` : filepath;
+    //const filename = `${github.context.payload.repository.name}-${version}.tar.gz`;
 
     console.info(`Ziplo Action | Filename is ${filename}`);
     console.info(`Ziplo Action | Execute tar command`);
@@ -29,7 +29,7 @@ async function run() {
     //const test = await exec.exec(`pwd`);
     //console.log("Current path = " + test);
 
-    await exec.exec(`tar -czvf ${filename} ./*`);
+    //await exec.exec(`tar -czvf ${filename} ./*`);
     await exec.exec(`ls -l`);
 
     const stats = fs.statSync(`./${filename}`);
