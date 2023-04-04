@@ -59,11 +59,15 @@ async function run() {
     const bodyStorage = new FormData();
     const fileStream = fs.readFileSync(`./${filename}`);
 
+    console.log(typeof fileStream);
+
     bodyStorage.append('file', fileStream, { knownLength: stats.size });
     bodyStorage.append('email', "github-actions@ziplo.fr");
     bodyStorage.append('source', "consignment");
-    bodyStorage.append('store', true);
+    //bodyStorage.append('store', true);
     bodyStorage.append('versioningToken', dataInit.body.token);
+
+    console.log(bodyStorage);
 
     const resultUpload = await fetch(CloudFactoryApiHost + 'versioning/upload', {
       method: 'POST',
