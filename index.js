@@ -4,6 +4,7 @@ const exec = require('@actions/exec');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 const fs = require("fs"); // Load the filesystem module
+const mime = require('mime-types')
 
 const ziploApiHost = "https://api.dev.ziplo.fr/v1/";
 const CloudFactoryApiHost = "https://ocs.dev.ziplo.fr/";
