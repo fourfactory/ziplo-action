@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const exec = require('@actions/exec');
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 const fs = require("fs"); // Load the filesystem module
 
