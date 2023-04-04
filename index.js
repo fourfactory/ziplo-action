@@ -30,7 +30,7 @@ async function run() {
     //console.log("Current path = " + test);
 
     //await exec.exec(`tar -czvf ${filename} ./*`);
-    await exec.exec(`ls -l`);
+    //await exec.exec(`ls -l`);
 
     const stats = fs.statSync(`./${filename}`);
 
@@ -69,8 +69,7 @@ async function run() {
       method: 'POST',
       body: bodyStorage,
       headers: {
-        'authorization': organizationToken,
-        'Content-Type': 'multipart/form-data'
+        'authorization': organizationToken
       }
     });
     const dataUpload = await resultUpload.json();
