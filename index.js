@@ -52,10 +52,7 @@ async function run() {
 
     const dataInit = await resultInit.json();
 
-    const debugLine = JSON.stringify(dataInit, undefined, 2)
-    console.log(`The debug line: ${debugLine}`);
-
-    console.info(`Ziplo Action | Authorization OK : ${dataInit.token}`);
+    console.info(`Ziplo Action | Authorization OK : ${dataInit.body.token}`);
     console.info(`Ziplo Action | Upload on Cloud-Factory`);
 
 
@@ -66,7 +63,7 @@ async function run() {
     bodyStorage.append('email', "github-actions@ziplo.fr");
     bodyStorage.append('source', "consignment");
     bodyStorage.append('store', true);
-    bodyStorage.append('versioningToken', dataInit.token);
+    bodyStorage.append('versioningToken', dataInit.body.token);
 
     const resultUpload = await fetch(CloudFactoryApiHost + 'versioning/upload', {
       method: 'POST',
@@ -82,7 +79,7 @@ async function run() {
 
     const finalResult = JSON.stringify(dataUpload, undefined, 2)
     console.log(`The final Result: ${finalResult}`);
-    core.setOutput("consignment-token", dataInit.token);
+    core.setOutput("consignment-token", dataInit.body.token);
 
     console.info("Ziplo Action | End of action");
   } catch (error) {
