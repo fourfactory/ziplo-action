@@ -46,6 +46,11 @@ async function run() {
 
     const dataInit = await resultInit.json();
 
+    if (dataInit.success === false) {
+      core.setFailed(dataInit.message);
+      return false;
+    }
+
     console.info(`Ziplo Action | Authorization OK : ${dataInit.body.token}`);
     console.info(`Ziplo Action | Upload on Cloud-Factory`);
 
@@ -67,7 +72,13 @@ async function run() {
     });
     const dataUpload = await resultUpload.json();
 
+    console.log(bodyStorage);
     console.log(JSON.stringify(dataUpload));
+
+    if (dataUpload.success === false) {
+      core.setFailed(dataUpload.message);
+      return false;
+    }
 
     const resultConsignment = await fetch(ziploApiHost + 'versioning/create', {
       method: 'POST',
