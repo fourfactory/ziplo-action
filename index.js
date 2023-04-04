@@ -15,7 +15,7 @@ async function run() {
     let version = core.getInput('version');
     const now = new Date();
 
-    if (typeof version !== 'string' || string?.length == 0) {
+    if (typeof version !== 'string' || version?.length == 0) {
       version = [now.getFullYear, now.getMonth, now.getDay].join("-");
     }
 
