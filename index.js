@@ -46,7 +46,8 @@ async function run() {
       body: JSON.stringify(body),
       headers: {
         'authorization': organizationToken,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Content-length": stats.size
       }
     });
 
