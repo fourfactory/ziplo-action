@@ -13,22 +13,24 @@ async function run() {
     console.info("Ziplo Action | Initialization");
     const organizationToken = core.getInput('organization-token');
     let version = core.getInput('version');
+    let filepath = core.getInput('filepath');
     const now = new Date();
 
     if (typeof version !== 'string' || version?.length == 0) {
       version = [now.getFullYear, now.getMonth, now.getDay].join("-");
     }
 
+    //const filename = filepath === null ? `${github.context.payload.repository.name}-${version}.tar.gz` : filepath;
     const filename = `${github.context.payload.repository.name}-${version}.tar.gz`;
 
     console.info(`Ziplo Action | Filename is ${filename}`);
     console.info(`Ziplo Action | Execute tar command`);
 
-    const test = await exec.exec(`pwd`);
-    console.log("Current path = " + test);
+    //const test = await exec.exec(`pwd`);
+    //console.log("Current path = " + test);
 
-    exec.exec(`tar -czvf ${filename} ${test}/*`);
-    exec.exec(`ls -l`);
+    await exec.exec(`tar -czvf ${filename} ${test}/*`);
+    await exec.exec(`ls -l`);
 
     const stats = fs.statSync(`./${filename}`);
 

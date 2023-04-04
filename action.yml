@@ -9,6 +9,10 @@ inputs:
     description: 'Version of your source code'
     required: false
     default: null
+  filepath:
+    description: 'File path of your source code'
+    required: false
+    default: null
 outputs:
   consignment-token:
     description: 'The unique consignment token generated'
