@@ -57,7 +57,7 @@ async function run() {
 
 
     const bodyStorage = new FormData();
-    const fileStream = fs.createReadStream(`./${filename}`);
+    const fileStream = fs.readFileSync(`./${filename}`);
 
     bodyStorage.append('file', fileStream, { knownLength: stats.size });
     bodyStorage.append('email', "github-actions@ziplo.fr");
