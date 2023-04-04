@@ -72,9 +72,6 @@ async function run() {
     });
     const dataUpload = await resultUpload.json();
 
-    console.log(bodyStorage);
-    console.log(JSON.stringify(dataUpload));
-
     if (dataUpload.success === false) {
       core.setFailed(dataUpload.message);
       return false;
