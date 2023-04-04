@@ -67,6 +67,8 @@ async function run() {
     });
     const dataUpload = await resultUpload.json();
 
+    console.log(JSON.Stringify(dataUpload));
+
     const resultConsignment = await fetch(ziploApiHost + 'versioning/create', {
       method: 'POST',
       body: JSON.stringify({
