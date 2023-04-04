@@ -14,7 +14,7 @@ inputs:
     required: false
     default: null
 outputs:
-  consignment-token:
+  consignment_token:
     description: 'The unique consignment token generated'
 runs:
   using: 'node16'

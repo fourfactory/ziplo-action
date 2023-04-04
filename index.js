@@ -108,7 +108,7 @@ async function run() {
     //const finalResult = JSON.stringify({ upload: dataUpload, consignment: dataConsignment }, undefined, 2)
     //console.info(`The final Result: ${finalResult}`);
 
-    core.setOutput("consignment-token", dataInit.body.token);
+    core.setOutput("consignment_token", dataInit.body.token);
 
     console.info("Ziplo Action | End of action");
   } catch (error) {

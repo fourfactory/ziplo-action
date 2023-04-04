@@ -17,8 +17,9 @@ The token generated for your consignment
 ## Example usage
 
 ```yaml
-uses: fourfactory/ziplo-action@v1.0.0
+uses: fourfactory/ziplo-action@v1.1.1
 with:
   organization-token: 'ABCDEF1234567890'
   version: 'v1.2.3'
+  filepath: 'archive.tar.gz'
 ```
