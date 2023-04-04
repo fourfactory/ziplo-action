@@ -20,4 +20,5 @@ The token generated for your consignment
 uses: fourfactory/ziplo-action@v1.0.0
 with:
   organization-token: 'ABCDEF1234567890'
+  version: 'v1.2.3'
 ```
