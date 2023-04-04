@@ -55,11 +55,8 @@ async function run() {
     console.info(`Ziplo Action | Authorization OK : ${dataInit.body.token}`);
     console.info(`Ziplo Action | Upload on Cloud-Factory`);
 
-
     const bodyStorage = new FormData();
     const fileStream = fs.readFileSync(`./${filename}`);
-
-    console.log(typeof fileStream);
 
     bodyStorage.append('file', fileStream, { knownLength: stats.size });
     bodyStorage.append('email', "github-actions@ziplo.fr");
