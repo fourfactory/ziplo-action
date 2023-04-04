@@ -21,18 +21,11 @@ async function run() {
     }
 
     const filename = filepath === null ? `${github.context.payload.repository.name}-${version}.tar.gz` : filepath;
-    //const filename = `${github.context.payload.repository.name}-${version}.tar.gz`;
 
     console.info(`Ziplo Action | Filename is ${filename}`);
-    //console.info(`Ziplo Action | Execute tar command`);
-
-    //const test = await exec.exec(`pwd`);
-    //console.log("Current path = " + test);
-
-    //await exec.exec(`tar -czvf ${filename} ./*`);
-    //await exec.exec(`ls -l`);
 
     const stats = fs.statSync(`./${filename}`);
+    const mimeType = mime.lookup(filename);
 
     const body = {
       size: stats.size,
@@ -68,19 +61,41 @@ async function run() {
       body: bodyStorage,
       headers: {
         'authorization': organizationToken,
+        'x-real-mime-type': mimeType
       }
     });
     const dataUpload = await resultUpload.json();
 
-    if (dataUpload.success === false) {
+    const resultConsignment = await fetch(ziploApiHost + 'versioning/create', {
+      method: 'POST',
+      body: JSON.stringify({
+        uuid: dataUpload.body.fileId,
+        filename: filename,
+        contentType: dataUpload.body.mime,
+        size: dataUpload.body.size,
+        title: `Github Actions - ${filename}`,
+        description: "Source code protected by Ziplo",
+        container: dataUpload.body.containerId,
+        checksum: dataUpload.body.checksum,
+        store: true,
+        versioning: dataInit.body.token
+      }),
+      headers: {
+        'authorization': organizationToken,
+        'Content-Type': 'application/json',
+      }
+    });
+    const dataConsignment = await resultConsignment.json();
+
+    if (dataConsignment.success === false) {
       core.setFailed(dataUpload.message);
       return false;
     }
 
     console.info(`Ziplo Action | Upload finished successfully`);
 
-    const finalResult = JSON.stringify(dataUpload, undefined, 2)
-    console.log(`The final Result: ${finalResult}`);
+    //const finalResult = JSON.stringify({ upload: dataUpload, consignment: dataConsignment }, undefined, 2)
+    //console.info(`The final Result: ${finalResult}`);
 
     core.setOutput("consignment-token", dataInit.body.token);
 
