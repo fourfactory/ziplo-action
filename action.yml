@@ -5,6 +5,10 @@ inputs:
     description: 'Your organization token'
     required: true
     default: null
+  version:
+    description: 'Version of your source code'
+    required: false
+    default: null
 outputs:
   consignment-token:
     description: 'The unique consignment token generated'

@@ -1,10 +1,9 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const exec = require('@actions/exec');
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 
 const fs = require("fs"); // Load the filesystem module
-
 
 const ziploApiHost = "https://api.dev.ziplo.fr/v1/";
 const CloudFactoryApiHost = "https://ocs.dev.ziplo.fr/";
@@ -22,6 +21,9 @@ async function run() {
 
     const filename = `${github.context.payload.repository.name}-${version}.tar.gz`;
 
+    console.info(`Ziplo Action | Filename is ${filename}`);
+    console.info(`Ziplo Action | Execute tar command`);
+
     exec.exec(`tar -czvf ${filename} ./*`);
 
     const stats = fs.statSync(filename);
@@ -30,6 +32,8 @@ async function run() {
       size: stats.size,
       filename: filename
     };
+
+    console.info(`Ziplo Action | Call Ziplo to init upload`);
 
     const resultInit = await fetch(ziploApiHost + 'versioning/init', {
       method: 'POST',
@@ -41,6 +45,9 @@ async function run() {
     });
 
     const dataInit = await resultInit.json();
+
+    console.info(`Ziplo Action | Authorization OK : ${dataInit.token}`);
+    console.info(`Ziplo Action | Upload on Cloud-Factory`);
 
     const bodyStorage = {
       email: "github-actions@ziplo.fr",
@@ -57,6 +64,8 @@ async function run() {
       }
     });
     const dataUpload = await resultUpload.json();
+
+    console.info(`Ziplo Action | Upload finished successfully`);
 
     const finalResult = JSON.stringify(dataUpload, undefined, 2)
     console.log(`The final Result: ${finalResult}`);
