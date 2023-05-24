@@ -32,15 +32,15 @@ async function run() {
       return false;
     }
 
-    console.info(`Ziplo Action | Authorization OK : ${dataInit.body.token}`);
+    console.info(`Ziplo Action | Authorization OK : ${dataInit.body.uuid}`);
     console.info(`Ziplo Action | Upload on Cloud-Factory`);
 
-    const bodyStorage = new FormData();
+    const formdata = new FormData();
     const fileBuffer = fs.readFileSync(`./${filename}`);
 
-    bodyStorage.append('file', fileBuffer);
+    formdata.append('file', fileBuffer);
 
-    const resultUpload = await apiService.upload(dataInit.body.uuid, bodyStorage);
+    const resultUpload = await apiService.upload(dataInit.body.uuid, formdata);
     const dataUpload = await resultUpload.json();
 
     if (dataUpload.success === false) {
