@@ -1,5 +1,5 @@
 name: 'Ziplo - Github Action'
-description: 'Make an automatic source code consignment easily'
+description: 'This action help you to protect your source code with Ziplo'
 inputs:
   organization-token:
     description: 'Your organization token'

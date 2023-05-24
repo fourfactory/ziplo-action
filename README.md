@@ -1,6 +1,6 @@
 # Ziplo - Github Action
 
-This action help you to make automatic consignment of your source code.
+This action help you to protect your source code with Ziplo.
 
 ## Inputs
 
@@ -23,9 +23,10 @@ Relative path of your file you want to protect in Ziplo
 ## Example usage
 
 ```yaml
-uses: fourfactory/ziplo-action@v2.0.0
+uses: fourfactory/ziplo-action@v2.0
 with:
   organization-token: 'ABCDEF1234567890'
+  project-token: 'ABC0987654321DEF'
   version: 'v1.2.3'
-  filepath: 'archive.tar.gz'
+  filepath: 'my-project.tar.gz'
 ```

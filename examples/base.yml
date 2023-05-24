@@ -1,0 +1,33 @@
+name: Ziplo Actions - basic example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ziplo_consignment:
+    runs-on: ubuntu-latest
+    name: Protect source code with Ziplo
+    steps:
+      - uses: actions/checkout@v2
+      # You can create your archive at the beggining
+      - name: Formalize folder
+        run: |
+          mkdir ../all-sources
+          rm -rf .git .github .README.md .gitignore
+          cp -TR . ../all-sources
+          tar -czvf my-project-${{ github.run_number }}.tar.gz ../all-sources
+      # Send your archive in a Ziplo Consignment Project
+      - name: Test Ziplo Github Actions
+        id: ziplo-action
+        uses: fourfactory/ziplo-action@v2.0
+        with:
+          organization-token: ${{ secrets.ZIPLO_ORG_TOKEN }}
+          project-token: ${{ secrets.ZIPLO_PRJ_TOKEN }}
+          version: ${{ github.run_number }}
+          filepath: my-project-${{ github.run_number }}.tar.gz
+      # You can now continue your deployment
+      - name: End process
+        run: |
+          echo "Code protected and application deployed"
