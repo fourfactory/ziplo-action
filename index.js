@@ -36,7 +36,8 @@ async function run() {
     console.info(`Ziplo Action | Upload on Cloud-Factory`);
 
     const formdata = new FormData();
-    const fileBuffer = fs.readFileSync(`./${filename}`);
+    //const fileBuffer = fs.readFileSync(`./${filename}`);
+    const fileBuffer = fs.createReadStream(`./${filename}`);
 
     formdata.append('file', fileBuffer);
 

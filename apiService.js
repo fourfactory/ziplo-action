@@ -18,8 +18,7 @@ const reservation = async (organizationToken, projectToken) => {
 const upload = async (uuid, formdata) => {
   return await fetch(`${CloudFactoryApiHost}/upload/${uuid}`, {
     method: 'POST',
-    body: formdata,
-    headers: formdata.getHeaders()
+    body: formdata
   });
 };
 
