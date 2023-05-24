@@ -9,6 +9,7 @@ async function run() {
   try {
     console.info("Ziplo Action | Initialization");
     const organizationToken = core.getInput('organization-token');
+    const projectToken = core.getInput('project-token');
     let version = core.getInput('version');
     let filepath = core.getInput('filepath');
     const now = new Date();
@@ -22,7 +23,7 @@ async function run() {
     //console.info(`Ziplo Action | Filename is ${filename}`);
     console.info(`Ziplo Action | Call Ziplo to init upload`);
 
-    const resultInit = await apiService.reservation(organizationToken);
+    const resultInit = await apiService.reservation(organizationToken, projectToken);
 
     const dataInit = await resultInit.json();
 
@@ -47,7 +48,7 @@ async function run() {
       return false;
     }
 
-    const resultConsignment = await apiService.consignment(organizationToken, dataInit._id);
+    const resultConsignment = await apiService.consignment(organizationToken, projectToken, dataInit._id);
     const dataConsignment = await resultConsignment.json();
 
     if (dataConsignment.success === false) {
