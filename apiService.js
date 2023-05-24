@@ -23,6 +23,7 @@ const upload = async (uuid, formdata) => {
 };
 
 const consignment = async (organizationToken, projectToken, referenceId) => {
+  console.info(referenceId);
   return await fetch(ziploApiHost + '/modules/gitcloning/consignment', {
     method: 'POST',
     body: JSON.stringify({

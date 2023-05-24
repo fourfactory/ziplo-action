@@ -50,6 +50,7 @@ async function run() {
 
     const resultConsignment = await apiService.consignment(organizationToken, projectToken, dataInit.body._id);
     const dataConsignment = await resultConsignment.json();
+    console.log(dataConsignment);
 
     if (dataConsignment.success === false) {
       core.setFailed(dataUpload.message);
