@@ -35,15 +35,11 @@ async function run() {
     console.info(`Ziplo Action | Upload on Cloud-Factory`);
 
     const formdata = new FormData();
-    //const fileBuffer = fs.readFileSync(`./${filename}`);
     const fileBuffer = fs.createReadStream(`./${filename}`);
-
     formdata.append('file', fileBuffer);
 
     const resultUpload = await apiService.upload(dataInit.body.uuid, formdata);
-    console.info(`Ziplo Action | File uploaded successfully`);
     const dataUpload = await resultUpload.json();
-    console.info(dataUpload);
 
     if (dataUpload.success === false) {
       core.setFailed(dataUpload.message);
@@ -52,7 +48,7 @@ async function run() {
 
     console.info(`Ziplo Action | Validate consignment`);
 
-    const resultConsignment = await apiService.consignment(organizationToken, projectToken, dataInit._id);
+    const resultConsignment = await apiService.consignment(organizationToken, projectToken, dataInit.body._id);
     const dataConsignment = await resultConsignment.json();
 
     if (dataConsignment.success === false) {
