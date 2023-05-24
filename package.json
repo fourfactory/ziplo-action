@@ -1,6 +1,6 @@
 {
   "name": "ziplo-github-action",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Automatic consignment of source code",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,6 @@
     "@actions/exec": "^1.1.1",
     "@actions/github": "^5.1.1",
     "form-data": "^4.0.0",
-    "mime-types": "^2.1.35",
     "node-fetch": "^2.6.9"
   }
 }

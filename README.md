@@ -8,16 +8,18 @@ This action help you to make automatic consignment of your source code.
 
 **Required** The unique token available in the back-office for your organization.
 
-## Outputs
+### `version`
 
-### `generated-token`
+Version number of your app
 
-The token generated for your consignment
+### `filepath`
+
+Relative path of your file you want to protect in Ziplo
 
 ## Example usage
 
 ```yaml
-uses: fourfactory/ziplo-action@v1.1.1
+uses: fourfactory/ziplo-action@v2.0.0
 with:
   organization-token: 'ABCDEF1234567890'
   version: 'v1.2.3'

@@ -1,13 +1,9 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const exec = require('@actions/exec');
-const fetch = require('node-fetch');
 const FormData = require('form-data');
 const fs = require("fs"); // Load the filesystem module
-const mime = require('mime-types')
 
-const ziploApiHost = "https://api.dev.ziplo.fr/v1/";
-const CloudFactoryApiHost = "https://ocs.dev.ziplo.fr/";
+const apiService = require('./apiService');
 
 async function run() {
   try {
@@ -23,26 +19,10 @@ async function run() {
 
     const filename = filepath === null ? `${github.context.payload.repository.name}-${version}.tar.gz` : filepath;
 
-    console.info(`Ziplo Action | Filename is ${filename}`);
-
-    const stats = fs.statSync(`./${filename}`);
-    const mimeType = mime.lookup(filename);
-
-    const body = {
-      size: stats.size,
-      filename: filename
-    };
-
+    //console.info(`Ziplo Action | Filename is ${filename}`);
     console.info(`Ziplo Action | Call Ziplo to init upload`);
 
-    const resultInit = await fetch(ziploApiHost + 'versioning/init', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: {
-        'authorization': organizationToken,
-        'Content-Type': 'application/json',
-      }
-    });
+    const resultInit = await apiService.reservation(organizationToken);
 
     const dataInit = await resultInit.json();
 
@@ -58,18 +38,8 @@ async function run() {
     const fileBuffer = fs.readFileSync(`./${filename}`);
 
     bodyStorage.append('file', fileBuffer);
-    bodyStorage.append('email', "github-actions@ziplo.fr");
-    bodyStorage.append('source', "consignment");
-    bodyStorage.append('versioningToken', dataInit.body.token);
 
-    const resultUpload = await fetch(CloudFactoryApiHost + 'versioning/upload', {
-      method: 'POST',
-      body: bodyStorage,
-      headers: {
-        'authorization': organizationToken,
-        'x-real-mime-type': mimeType
-      }
-    });
+    const resultUpload = await apiService.upload(dataInit.body.uuid, bodyStorage);
     const dataUpload = await resultUpload.json();
 
     if (dataUpload.success === false) {
@@ -77,25 +47,7 @@ async function run() {
       return false;
     }
 
-    const resultConsignment = await fetch(ziploApiHost + 'versioning/create', {
-      method: 'POST',
-      body: JSON.stringify({
-        uuid: dataUpload.body.fileId,
-        filename: filename,
-        contentType: dataUpload.body.mime,
-        size: dataUpload.body.size,
-        title: `Github Actions - ${filename}`,
-        description: "Source code protected by Ziplo",
-        container: dataUpload.body.containerId,
-        checksum: dataUpload.body.checksum,
-        store: true,
-        versioning: dataInit.body.token
-      }),
-      headers: {
-        'authorization': organizationToken,
-        'Content-Type': 'application/json',
-      }
-    });
+    const resultConsignment = await apiService.consignment(organizationToken, dataInit._id);
     const dataConsignment = await resultConsignment.json();
 
     if (dataConsignment.success === false) {
@@ -104,9 +56,6 @@ async function run() {
     }
 
     console.info(`Ziplo Action | Upload finished successfully`);
-
-    //const finalResult = JSON.stringify({ upload: dataUpload, consignment: dataConsignment }, undefined, 2)
-    //console.info(`The final Result: ${finalResult}`);
 
     core.setOutput("consignment_token", dataInit.body.token);
 
