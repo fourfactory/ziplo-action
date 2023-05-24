@@ -13,9 +13,6 @@ inputs:
     description: 'File path of your source code'
     required: false
     default: null
-outputs:
-  consignment_token:
-    description: 'The unique consignment token generated'
 runs:
   using: 'node16'
   main: 'index.js'
