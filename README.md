@@ -8,6 +8,10 @@ This action help you to make automatic consignment of your source code.
 
 **Required** The unique token available in the back-office for your organization.
 
+### `project-token`
+
+**Required** The unique token available in the back-office for your consignment project (see documentation).
+
 ### `version`
 
 Version number of your app

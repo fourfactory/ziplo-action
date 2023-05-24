@@ -3,13 +3,14 @@ const fetch = require('node-fetch');
 const ziploApiHost = "https://api.ziplo.fr/v2";
 const CloudFactoryApiHost = "https://storage.cloud-factory.fr/api/v3";
 
-const reservation = async (organizationToken) => {
+const reservation = async (organizationToken, projectToken) => {
   return await fetch(ziploApiHost + '/modules/files/reservation/consignment', {
     method: 'POST',
     headers: {
       'authorization': `Bearer ${organizationToken}`,
+      'x-cons-token': projectToken,
       'x-agent': 'GITCLONING',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     }
   })
 };
@@ -21,7 +22,7 @@ const upload = async (uuid, bodyStorage) => {
   });
 };
 
-const consignment = async (organizationToken, referenceId) => {
+const consignment = async (organizationToken, projectToken, referenceId) => {
   return await fetch(ziploApiHost + '/modules/gitcloning/consignment', {
     method: 'POST',
     body: JSON.stringify({
@@ -29,6 +30,7 @@ const consignment = async (organizationToken, referenceId) => {
     }),
     headers: {
       'authorization': `Bearer ${organizationToken}`,
+      'x-cons-token': projectToken,
       'x-agent': 'GITCLONING',
       'Content-Type': 'application/json',
     }

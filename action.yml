@@ -5,6 +5,10 @@ inputs:
     description: 'Your organization token'
     required: true
     default: null
+  project-token:
+    description: 'Your consignment project token'
+    required: true
+    default: null
   version:
     description: 'Version of your source code'
     required: false
