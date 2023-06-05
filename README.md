@@ -6,11 +6,15 @@ This action help you to protect your source code with Ziplo.
 
 ### `organization-token`
 
-**Required** The unique token available in the back-office for your organization.
+**Required** The unique token available in the back-office of your organization (go on page https://ziplo.fr/app/integrations).
+
+![Image of access token](https://ziplo.fr/img/integrations/ziplo-integration-token-example.png)
 
 ### `project-token`
 
-**Required** The unique token available in the back-office for your consignment project (see documentation).
+**Required** The unique token available in the back-office for your consignment project (see documentation on ziplo website).
+
+![Image of project token](https://ziplo.fr/img/integrations/ziplo-github-actions-example.png)
 
 ### `version`
 
@@ -30,3 +34,5 @@ with:
   version: 'v1.2.3'
   filepath: 'my-project.tar.gz'
 ```
+
+You have some examples files in the [`examples`](examples/) directory of this project.
