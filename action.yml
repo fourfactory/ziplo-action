@@ -1,5 +1,8 @@
 name: 'Ziplo - Github Action'
 description: 'This action help you to protect your source code with Ziplo'
+branding:
+  icon: 'shield'
+  color: 'purple'
 inputs:
   organization-token:
     description: 'Your organization token'
