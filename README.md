@@ -27,7 +27,7 @@ Relative path of your file you want to protect in Ziplo
 ## Example usage
 
 ```yaml
-uses: fourfactory/ziplo-action@v2.0
+uses: fourfactory/ziplo-action@v2
 with:
   organization-token: 'ABCDEF1234567890'
   project-token: 'ABC0987654321DEF'
